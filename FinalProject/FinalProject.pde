@@ -26,7 +26,10 @@ void draw() {
     System.out.println(Arrays.toString(keys));
   }
   
+  background(14,240,60);
+  
   //draw player
+  p.move();
   square(p.x, p.y, p.radius);
 }
 

@@ -6,6 +6,8 @@ Members: Bryan Cheng
 Brief Project Description: Single-player Zelda-like game with dungeons and map in Processing. Has combat and movement, different screens, enemies, points, weapons, e.t.c. Should be easily open to additional elements on top of base game.  
   
 Compile/Run Instructions:  
+Run FinalProject.pde in Processing.
   
 Development Log:  
 05/25/21: Finish prototype + Github repo and work on UML.  
+05/28/21: Work on player and map classes.
