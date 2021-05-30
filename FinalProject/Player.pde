@@ -10,4 +10,8 @@ public class Player{
    direction = 0;
    speed = 10;
  }
+ 
+ void move(){
+   
+ }
 }
