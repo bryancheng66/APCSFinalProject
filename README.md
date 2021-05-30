@@ -10,5 +10,5 @@ Run FinalProject.pde in Processing.
   
 Development Log:  
 05/25/21: Finish prototype + Github repo and work on UML.  
-05/28/21: Work on player and map classes.
+05/28/21: Work on player and map classes.  
 05/30/21: Add basic movement.
