@@ -29,14 +29,11 @@ public class Player {
       xMove-=speed;
     }
 
-    for (int r=0; r<mapHeight; r++) {
-      for (int c=0; c<mapWidth; c++) {
-        //check if collides with any terrain
-        if (currentMap.terrain[r][c]==1) {
-        }
-      }
+    if (xMove!=0 && yMove!=0) {
+      xMove *= 0.8;
+      yMove *= 0.8;
     }
-    
+
     x+=xMove; 
     y+=yMove;
   }
