@@ -37,10 +37,18 @@ public class Player {
     //check for collision
     int tileX = x/baseWidth;
     int tileY = y/baseWidth;
+    if (tileX == mapWidth) tileX--;
+    if (tileY == mapHeight) tileY--;
+    
     System.out.println(tileX + "," + tileY);
-    if (tileX!=0 && xMove<0) {
-      System.out.println(tileX * baseWidth - baseWidth/2);
+    if (tileX>0 && xMove<0) {
       if (currentMap.terrain[tileY][tileX-1] == 1 && tileX * baseWidth > x + xMove - baseWidth/2) {
+        xMove=0;
+      }
+    }
+
+    if (tileX<mapWidth-1 && xMove>0) {
+      if (currentMap.terrain[tileY][tileX+1] == 1 && (tileX+1) * baseWidth < x + xMove + baseWidth/2) {
         xMove=0;
       }
     }
@@ -56,7 +64,7 @@ public class Player {
       currentMap = maps[currentMap.y][currentMap.x+1]; 
       x=0;
     }
-    if (y>height) {
+    if (y>=height) {
       currentMap = maps[currentMap.y+1][currentMap.x];
       y=0;
     }
@@ -71,8 +79,8 @@ public class Player {
   }
 
   void display() {
-    move();
     checkWarp();
+    move();
     rectMode(RADIUS);
     fill(255, 255, 255);
     square(p.x, p.y, p.radius);

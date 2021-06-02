@@ -36,7 +36,7 @@ void setup() {
     System.out.println("OMG " + e);
   }
   
-  currentMap = maps[0][0];
+  currentMap = maps[0][1];
 }
 
 void setupMaps(String input) throws Exception {
