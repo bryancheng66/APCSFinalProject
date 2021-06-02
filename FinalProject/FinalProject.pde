@@ -23,6 +23,7 @@ void setup() {
   mapWidth = 16;
   mapHeight = 12;
   p = new Player(width/2, height/2);
+  //row, then column
   currentMap = new int[2];
   currentMap[0] = 0; currentMap[1] = 0;
   keys = new boolean[4];
@@ -53,7 +54,7 @@ void setupMaps(String input) throws Exception {
       for (int r=0; r<mapHeight; r++) {
         line = reader.readLine();
         for (int c=0; c<mapWidth; c++) {
-          newMap[r][c] = Integer.parseInt(line.substring(2*c, 2*c+1));
+          newMap[r][c] = Integer.parseInt(line.substring(c, c+1));
         }
       }
       reader.readLine();
