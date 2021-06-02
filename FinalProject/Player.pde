@@ -18,14 +18,11 @@ public class Player {
     int yMove=0;
     if (keys[0]) {
       yMove-=speed;
-    }
-    if (keys[1]) {
+    } else if (keys[1]) {
       xMove+=speed;
-    }
-    if (keys[2]) {
+    } else if (keys[2]) {
       yMove+=speed;
-    }
-    if (keys[3]) {
+    } else if (keys[3]) {
       xMove-=speed;
     }
 
@@ -35,21 +32,34 @@ public class Player {
     }
 
     //check for collision
-    int tileX = x/baseWidth;
-    int tileY = y/baseWidth;
-    if (tileX == mapWidth) tileX--;
-    if (tileY == mapHeight) tileY--;
-    
-    System.out.println(tileX + "," + tileY);
-    if (tileX>0 && xMove<0) {
-      if (currentMap.terrain[tileY][tileX-1] == 1 && tileX * baseWidth > x + xMove - baseWidth/2) {
-        xMove=0;
-      }
-    }
+    if (xMove != 0 || xMove== 0) {
+      int tileX = x/baseWidth;
+      int tileY = y/baseWidth;
+      if (tileX == mapWidth) tileX--;
+      if (tileY == mapHeight) tileY--;
 
-    if (tileX<mapWidth-1 && xMove>0) {
-      if (currentMap.terrain[tileY][tileX+1] == 1 && (tileX+1) * baseWidth < x + xMove + baseWidth/2) {
-        xMove=0;
+      System.out.println(tileX + "," + tileY);
+      if (tileX>0) {
+        if (currentMap.terrain[tileY][tileX-1] == 1 && tileX * baseWidth >= x + xMove - baseWidth/2) {
+          xMove -= (tileX * baseWidth) - (x + xMove - baseWidth/2);
+        }
+      }
+
+      if (tileX<mapWidth-1) {
+        if (currentMap.terrain[tileY][tileX+1] == 1 && (tileX+1) * baseWidth <= x + xMove + baseWidth/2) {
+          xMove -= ((tileX+1) * baseWidth) - (x + xMove + baseWidth/2);
+        }
+      }
+      if (tileY>0) {
+        if (currentMap.terrain[tileY-1][tileX] == 1 && tileY * baseWidth >= y + yMove - baseWidth/2) {
+          yMove -= (tileY * baseWidth) - (y + yMove - baseWidth/2);
+        }
+      }
+
+      if (tileY<mapHeight-1) {
+        if (currentMap.terrain[tileY+1][tileX] == 1 && (tileY+1) * baseWidth <= y + yMove + baseWidth/2) {
+          yMove -= ((tileY+1) * baseWidth) - (y + yMove + baseWidth/2);
+        }
       }
     }
 

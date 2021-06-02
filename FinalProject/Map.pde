@@ -1,8 +1,6 @@
 import java.util.*;
 
 public class Map {
-  int[][] enemies;
-  int[][] items;
   int[][] terrain;
   int x;
   int y;

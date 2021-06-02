@@ -24,18 +24,18 @@ void setup() {
   baseWidth = 50;
   mapWidth = 16;
   mapHeight = 12;
-  
+
   keys = new boolean[4];
 
   p = new Player(width/2, height/2);
-  
+
   try {
     setupMaps("./data/maps.txt");
   }
   catch(Exception e) {
     System.out.println("OMG " + e);
   }
-  
+
   currentMap = maps[0][1];
 }
 
@@ -47,7 +47,7 @@ void setupMaps(String input) throws Exception {
   line = reader.readLine();
   int mRows = Integer.parseInt(line.substring(0, 1));
   int mCols = Integer.parseInt(line.substring(2, 3));
-  
+
   maps = new Map[mRows][mCols];
   //each map
   for (int mR=0; mR<mRows; mR++) {
@@ -68,8 +68,8 @@ void setupMaps(String input) throws Exception {
 
 void draw() {
   background(14, 240, 60);
-  p.display();
   currentMap.display();
+  p.display();
 }
 
 void keyPressed() {
