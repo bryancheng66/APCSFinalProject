@@ -34,6 +34,17 @@ public class Player {
       yMove *= 0.8;
     }
 
+    //check for collision
+    int tileX = x/baseWidth;
+    int tileY = y/baseWidth;
+    System.out.println(tileX + "," + tileY);
+    if (tileX!=0 && xMove<0) {
+      System.out.println(tileX * baseWidth - baseWidth/2);
+      if (currentMap.terrain[tileY][tileX-1] == 1 && tileX * baseWidth > x + xMove - baseWidth/2) {
+        xMove=0;
+      }
+    }
+
     x+=xMove; 
     y+=yMove;
   }
@@ -57,7 +68,6 @@ public class Player {
       currentMap = maps[currentMap.y-1][currentMap.x];
       y=height;
     }
-    System.out.println(currentMap.x + "," + currentMap.y);
   }
 
   void display() {

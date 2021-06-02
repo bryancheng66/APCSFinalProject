@@ -7,7 +7,7 @@ public class Map {
   int x;
   int y;
 
-  Map(int[][] terrain, int x, int y/*, int[][] enemies, int[][] items*/) {
+  Map(int[][] terrain, int x, int y/*, int[][] enemies*/) {
     this.terrain = terrain;
     this.x = x;
     this.y = y;
