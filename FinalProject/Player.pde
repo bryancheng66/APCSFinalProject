@@ -14,37 +14,53 @@ public class Player {
   }
 
   void move() {
+    int xMove=0;
+    int yMove=0;
     if (keys[0]) {
-      y-=speed;
+      yMove-=speed;
     }
     if (keys[1]) {
-      x+=speed;
+      xMove+=speed;
     }
     if (keys[2]) {
-      y+=speed;
+      yMove+=speed;
     }
     if (keys[3]) {
-      x-=speed;
+      xMove-=speed;
     }
+
+    for (int r=0; r<mapHeight; r++) {
+      for (int c=0; c<mapWidth; c++) {
+        //check if collides with any terrain
+        if (currentMap.terrain[r][c]==1) {
+        }
+      }
+    }
+    
+    x+=xMove; 
+    y+=yMove;
   }
 
+  //if on edge move to next map
+  //doesn't check if on edge of world map
   void checkWarp() {
     if (x>width) {
-      currentMap[1]++; 
+      currentMap = maps[currentMap.y][currentMap.x+1]; 
       x=0;
     }
     if (y>height) {
-      currentMap[0]++;
+      currentMap = maps[currentMap.y+1][currentMap.x];
       y=0;
     }
     if (x<0) {
-      currentMap[1]--; 
+      currentMap = maps[currentMap.y][currentMap.x-1];
       x=width;
     }
     if (y<0) {
-      currentMap[0]--;
+      currentMap = maps[currentMap.y-1][currentMap.x];
       y=height;
     }
+    System.out.println(currentMap.x + "," + currentMap.y);
   }
 
   void display() {

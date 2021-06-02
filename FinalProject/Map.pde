@@ -4,9 +4,13 @@ public class Map {
   int[][] enemies;
   int[][] items;
   int[][] terrain;
+  int x;
+  int y;
 
-  Map(int[][] terrain/*, int[][] enemies, int[][] items*/) {
+  Map(int[][] terrain, int x, int y/*, int[][] enemies, int[][] items*/) {
     this.terrain = terrain;
+    this.x = x;
+    this.y = y;
   }
 
   void display() {

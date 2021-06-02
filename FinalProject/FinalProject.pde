@@ -4,13 +4,15 @@ import java.io.*;
 //declare variables
 boolean debug;
 
+//map
 static int baseWidth;
 static int mapWidth;
-static int mapHeight;
-Player p; 
-static int[] currentMap;
+static int mapHeight; 
+static Map currentMap;
 static Map[][] maps;
+//misc
 static boolean[] keys;
+Player p;
 
 void setup() {
   size(800, 600);
@@ -22,18 +24,19 @@ void setup() {
   baseWidth = 50;
   mapWidth = 16;
   mapHeight = 12;
-  p = new Player(width/2, height/2);
-  //row, then column
-  currentMap = new int[2];
-  currentMap[0] = 0; currentMap[1] = 0;
+  
   keys = new boolean[4];
 
+  p = new Player(width/2, height/2);
+  
   try {
     setupMaps("./data/maps.txt");
   }
   catch(Exception e) {
     System.out.println("OMG " + e);
   }
+  
+  currentMap = maps[0][0];
 }
 
 void setupMaps(String input) throws Exception {
@@ -58,7 +61,7 @@ void setupMaps(String input) throws Exception {
         }
       }
       reader.readLine();
-      maps[mR][mC] = new Map(newMap);
+      maps[mR][mC] = new Map(newMap, mC, mR);
     }
   }
 }
@@ -66,7 +69,7 @@ void setupMaps(String input) throws Exception {
 void draw() {
   background(14, 240, 60);
   p.display();
-  maps[currentMap[0]][currentMap[1]].display();
+  currentMap.display();
 }
 
 void keyPressed() {
