@@ -4,6 +4,7 @@ public class Player {
   int direction; //0, 1, 2, 3 are N, E, S, W
   int speed;
   int radius;
+  int health;
 
   Player(int x, int y) {
     this.x=x;
@@ -11,6 +12,7 @@ public class Player {
     direction = 0;
     speed = 2;
     radius = baseWidth/2;
+    health = 30;
   }
 
   void move() {
@@ -91,6 +93,9 @@ public class Player {
   void display() {
     checkWarp();
     move();
+    fill(255,0,0);
+    textAlign(CENTER);
+    text("Health: " + health, x, y-50, 10);
     rectMode(RADIUS);
     fill(255, 255, 255);
     square(p.x, p.y, p.radius);
