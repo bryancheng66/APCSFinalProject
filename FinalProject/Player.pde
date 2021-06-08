@@ -17,7 +17,7 @@ public class Player {
     health = 30;
     timer=0;
     attacking = false;
-    
+
     swordPos = new int[2];
     swordPos[0] = 0;
     swordPos[1] = 0;
@@ -41,40 +41,29 @@ public class Player {
       direction=3;
     }
 
-    //check for collision
-    if (xMove != 0 || yMove != 0) {
-      int tileX = x/bw;
-      int tileY = y/bw;
-      if (tileX == mapWidth) tileX--;
-      if (tileY == mapHeight) tileY--;
-
-      System.out.println(tileX + "," + tileY);
-      if (tileX>0) {
-        if (currentMap.terrain[tileY][tileX-1] == 1 && tileX * bw >= x + xMove - bw/2) {
-          xMove -= (tileX * bw) - (x + xMove - bw/2);
+    if (xMove!=0 || yMove!=0) {
+      int xF = x+xMove;
+      int yF = y+yMove;
+      
+      int pL = xF-hbw;
+      int pR = xF+hbw;
+      int pU = yF-hbw;
+      int pD = yF+hbw;
+      
+      for (int r=0; r<mapHeight; r++) {
+        for (int c=0; c<mapWidth; c++) {
+          if (currentMap.terrain[r][c] == 1) {
+            int tL = c*bw;
+            int tR = tL+bw;
+            int tU = r*bw;
+            int tD = tU+bw;
+            
+            if((pL <= tR && pR >= tL) && (pU <= tD && pD >= tU)){
+              xMove = 0;
+              yMove = 0;
+            }
+          }
         }
-      }
-
-      if (tileX<mapWidth-1) {
-        if (currentMap.terrain[tileY][tileX+1] == 1 && (tileX+1) * bw <= x + xMove + bw/2) {
-          xMove -= ((tileX+1) * bw) - (x + xMove + bw/2);
-        }
-      }
-      if (tileY>0) {
-        if (currentMap.terrain[tileY-1][tileX] == 1 && tileY * bw >= y + yMove - bw/2) {
-          yMove -= (tileY * bw) - (y + yMove - bw/2);
-        }
-      }
-
-      if (tileY<mapHeight-1) {
-        if (currentMap.terrain[tileY+1][tileX] == 1 && (tileY+1) * bw <= y + yMove + bw/2) {
-          yMove -= ((tileY+1) * bw) - (y + yMove + bw/2);
-        }
-      }
-    }
-
-    for (int r=0; r<mapHeight; r++) {
-      for (int c=0; c<mapWidth; c++) {
       }
     }
 
@@ -111,8 +100,8 @@ public class Player {
       timer--;
     }
   }
-  
-  void run(){
+
+  void run() {
     checkWarp();
     if (!attacking) {
       move();
@@ -125,7 +114,7 @@ public class Player {
     text("Health: " + health + "," + direction, x, y-bw, 10);
     fill(255, 255, 255);
     square(p.x, p.y, bw);
-    
+
     if (attacking) {
       //display sword
       fill(0, 100, 255);
