@@ -18,6 +18,7 @@ void setup() {
   size(800, 600);
   noStroke();
   rectMode(RADIUS);
+  textAlign(CENTER);
   debug=false;
 
   //16 tiles by 12 tiles, each tile is 50px
@@ -67,9 +68,16 @@ void setupMaps(String input) throws Exception {
 }
 
 void draw() {
-  background(14, 240, 60);
-  currentMap.display();
-  p.display();
+  if (p.health <= 0) {
+    background(0, 0, 0);
+    fill(255, 255, 255);
+    textSize(75);
+    text("GAME OVER", width/2, height/2);
+  } else {
+    background(14, 240, 60);
+    currentMap.display();
+    p.display();
+  }
 }
 
 void keyPressed() {

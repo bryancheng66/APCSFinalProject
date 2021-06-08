@@ -5,6 +5,7 @@ public class Player {
   int speed;
   int radius;
   int health;
+  boolean attack;
 
   Player(int x, int y) {
     this.x=x;
@@ -12,7 +13,8 @@ public class Player {
     direction = 0;
     speed = 2;
     radius = baseWidth/2;
-    health = 30;
+    health = 0;
+    attack = false;
   }
 
   void move() {
@@ -20,17 +22,16 @@ public class Player {
     int yMove=0;
     if (keys[0]) {
       yMove-=speed;
+      direction=0;
     } else if (keys[1]) {
       xMove+=speed;
+      direction=1;
     } else if (keys[2]) {
       yMove+=speed;
+      direction=2;
     } else if (keys[3]) {
       xMove-=speed;
-    }
-
-    if (xMove!=0 && yMove!=0) {
-      xMove *= 0.8;
-      yMove *= 0.8;
+      direction=3;
     }
 
     //check for collision
@@ -93,9 +94,8 @@ public class Player {
   void display() {
     checkWarp();
     move();
-    fill(255,0,0);
-    textAlign(CENTER);
-    text("Health: " + health, x, y-50, 10);
+    fill(255, 0, 0);
+    text("Health: " + health + "," + direction, x, y-baseWidth, 10);
     rectMode(RADIUS);
     fill(255, 255, 255);
     square(p.x, p.y, p.radius);
