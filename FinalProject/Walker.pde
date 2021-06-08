@@ -42,7 +42,7 @@ public class Walker extends Enemy {
         state = false;
       }
 
-      if (tileCollision(x+xMove, y+yMove)) {
+      if (tileCollisionE(x+xMove, y+yMove)) {
         xMove=0;
         yMove=0;
       }
