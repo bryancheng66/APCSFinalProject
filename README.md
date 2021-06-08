@@ -7,9 +7,12 @@ Brief Project Description: Single-player Zelda-like game with dungeons and map i
   
 Compile/Run Instructions:  
 Run FinalProject.pde in Processing.
+Arrow keys to move, spacebar to attack.  
   
 Development Log:  
-06/02/21: Add moving from map to map.  
+06/08/21: Add enemies, points, improve collisions, add effects/gui.  
+06/07/21: Add health and gameover.   
+06/02/21: Add moving from map to map.   
 06/01/21: Read map data from files.  
 05/30/21: Add basic movement.
 05/28/21: Work on player and map classes.  
