@@ -5,7 +5,8 @@ import java.io.*;
 boolean debug;
 
 //map
-static int baseWidth;
+static int bw;
+static int hbw;
 static int mapWidth;
 static int mapHeight; 
 static Map currentMap;
@@ -22,11 +23,12 @@ void setup() {
   debug=false;
 
   //16 tiles by 12 tiles, each tile is 50px
-  baseWidth = 50;
+  bw = 50;
+  hbw = bw/2;
   mapWidth = 16;
   mapHeight = 12;
 
-  keys = new boolean[4];
+  keys = new boolean[5];
 
   p = new Player(width/2, height/2);
 
@@ -68,6 +70,7 @@ void setupMaps(String input) throws Exception {
 }
 
 void draw() {
+  //Game Over
   if (p.health <= 0) {
     background(0, 0, 0);
     fill(255, 255, 255);
@@ -93,6 +96,9 @@ void keyPressed() {
   if (keyCode==LEFT) {
     keys[3] = true;
   }
+  if (key==' ') {
+    keys[4] = true;
+  }
 }
 
 void keyReleased() {
@@ -107,5 +113,8 @@ void keyReleased() {
   }
   if (keyCode==LEFT) {
     keys[3] = false;
+  }
+  if (key==' ') {
+    keys[4] = false;
   }
 }

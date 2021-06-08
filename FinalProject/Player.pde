@@ -5,16 +5,15 @@ public class Player {
   int speed;
   int radius;
   int health;
-  boolean attack;
+  int timer;
 
   Player(int x, int y) {
     this.x=x;
     this.y=y;
     direction = 0;
     speed = 2;
-    radius = baseWidth/2;
-    health = 0;
-    attack = false;
+    health = 30;
+    timer=0;
   }
 
   void move() {
@@ -35,34 +34,39 @@ public class Player {
     }
 
     //check for collision
-    if (xMove != 0 || xMove== 0) {
-      int tileX = x/baseWidth;
-      int tileY = y/baseWidth;
+    if (xMove != 0 || yMove != 0) {
+      int tileX = x/bw;
+      int tileY = y/bw;
       if (tileX == mapWidth) tileX--;
       if (tileY == mapHeight) tileY--;
 
       System.out.println(tileX + "," + tileY);
       if (tileX>0) {
-        if (currentMap.terrain[tileY][tileX-1] == 1 && tileX * baseWidth >= x + xMove - baseWidth/2) {
-          xMove -= (tileX * baseWidth) - (x + xMove - baseWidth/2);
+        if (currentMap.terrain[tileY][tileX-1] == 1 && tileX * bw >= x + xMove - bw/2) {
+          xMove -= (tileX * bw) - (x + xMove - bw/2);
         }
       }
 
       if (tileX<mapWidth-1) {
-        if (currentMap.terrain[tileY][tileX+1] == 1 && (tileX+1) * baseWidth <= x + xMove + baseWidth/2) {
-          xMove -= ((tileX+1) * baseWidth) - (x + xMove + baseWidth/2);
+        if (currentMap.terrain[tileY][tileX+1] == 1 && (tileX+1) * bw <= x + xMove + bw/2) {
+          xMove -= ((tileX+1) * bw) - (x + xMove + bw/2);
         }
       }
       if (tileY>0) {
-        if (currentMap.terrain[tileY-1][tileX] == 1 && tileY * baseWidth >= y + yMove - baseWidth/2) {
-          yMove -= (tileY * baseWidth) - (y + yMove - baseWidth/2);
+        if (currentMap.terrain[tileY-1][tileX] == 1 && tileY * bw >= y + yMove - bw/2) {
+          yMove -= (tileY * bw) - (y + yMove - bw/2);
         }
       }
 
       if (tileY<mapHeight-1) {
-        if (currentMap.terrain[tileY+1][tileX] == 1 && (tileY+1) * baseWidth <= y + yMove + baseWidth/2) {
-          yMove -= ((tileY+1) * baseWidth) - (y + yMove + baseWidth/2);
+        if (currentMap.terrain[tileY+1][tileX] == 1 && (tileY+1) * bw <= y + yMove + bw/2) {
+          yMove -= ((tileY+1) * bw) - (y + yMove + bw/2);
         }
+      }
+    }
+
+    for (int r=0; r<mapHeight; r++) {
+      for (int c=0; c<mapWidth; c++) {
       }
     }
 
@@ -91,13 +95,37 @@ public class Player {
     }
   }
 
+  void attack() {    
+    if(timer==0 && keys[4]){
+      timer=25;
+    }
+    
+    if (timer>0) {
+      //display sword
+      fill(0, 100, 255);
+      rectMode(CENTER);
+      
+      if (direction==0) {
+        rect(x,y-bw, bw/2, bw);
+      } else if (direction==1){
+        rect(x+bw,y, bw, bw/2);
+      } else if (direction==2){
+        rect(x,y+bw, bw/2, bw);
+      } else if (direction==3){
+        rect(x-bw,y, bw, bw/2);
+      } 
+      timer--;
+    }
+  }
+
   void display() {
     checkWarp();
     move();
+    attack();
     fill(255, 0, 0);
-    text("Health: " + health + "," + direction, x, y-baseWidth, 10);
-    rectMode(RADIUS);
+    text("Health: " + health + "," + direction, x, y-bw, 10);
+    rectMode(CENTER);
     fill(255, 255, 255);
-    square(p.x, p.y, p.radius);
+    square(p.x, p.y, bw);
   }
 }

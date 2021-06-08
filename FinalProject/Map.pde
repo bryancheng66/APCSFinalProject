@@ -17,7 +17,7 @@ public class Map {
       for (int c=0; c<mapWidth; c++) {
         if(terrain[r][c] == 1){
           fill(100,40,0);
-          square(c*baseWidth, r*baseWidth, baseWidth);
+          square(c*bw, r*bw, bw);
         }
       }
     }
