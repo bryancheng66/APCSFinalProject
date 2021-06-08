@@ -6,6 +6,8 @@ public class Player {
   int radius;
   int health;
   int timer;
+  boolean attacking;
+  int[] swordPos;
 
   Player(int x, int y) {
     this.x=x;
@@ -14,11 +16,17 @@ public class Player {
     speed = 2;
     health = 30;
     timer=0;
+    attacking = false;
+    
+    swordPos = new int[2];
+    swordPos[0] = 0;
+    swordPos[1] = 0;
   }
 
   void move() {
     int xMove=0;
     int yMove=0;
+
     if (keys[0]) {
       yMove-=speed;
       direction=0;
@@ -96,36 +104,41 @@ public class Player {
   }
 
   void attack() {    
-    if(timer==0 && keys[4]){
-      timer=25;
-    }
-    
-    if (timer>0) {
-      //display sword
-      fill(0, 100, 255);
-      rectMode(CENTER);
-      
-      if (direction==0) {
-        rect(x,y-bw, bw/2, bw);
-      } else if (direction==1){
-        rect(x+bw,y, bw, bw/2);
-      } else if (direction==2){
-        rect(x,y+bw, bw/2, bw);
-      } else if (direction==3){
-        rect(x-bw,y, bw, bw/2);
-      } 
+    if (timer==0) {
+      timer= (keys[4]?1:0) * 25;
+      attacking = keys[4];
+    } else {
       timer--;
     }
   }
+  
+  void run(){
+    checkWarp();
+    if (!attacking) {
+      move();
+    }
+    attack();
+  }
 
   void display() {
-    checkWarp();
-    move();
-    attack();
     fill(255, 0, 0);
     text("Health: " + health + "," + direction, x, y-bw, 10);
-    rectMode(CENTER);
     fill(255, 255, 255);
     square(p.x, p.y, bw);
+    
+    if (attacking) {
+      //display sword
+      fill(0, 100, 255);
+
+      if (direction==0) {
+        rect(x, y-bw, bw/2, bw);
+      } else if (direction==1) {
+        rect(x+bw, y, bw, bw/2);
+      } else if (direction==2) {
+        rect(x, y+bw, bw/2, bw);
+      } else if (direction==3) {
+        rect(x-bw, y, bw, bw/2);
+      }
+    }
   }
 }
