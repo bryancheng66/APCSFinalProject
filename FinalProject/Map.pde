@@ -4,20 +4,38 @@ public class Map {
   int[][] terrain;
   int x;
   int y;
+  boolean setup;
 
-  Map(int[][] terrain, int x, int y/*, int[][] enemies*/) {
+  Map(int[][] terrain, int x, int y) {
     this.terrain = terrain;
     this.x = x;
     this.y = y;
+    setup = false;
   }
 
   void display() {
+    if(!setup){
+      setupEnemies();
+      setup = true;
+    }
+    
     background(14, 240, 60);
     for (int r=0; r<mapHeight; r++) {
       for (int c=0; c<mapWidth; c++) {
         if (terrain[r][c] == 1) {
           fill(100, 40, 0);
           square(c*bw+hbw, r*bw+hbw, bw);
+        }
+      }
+    }
+  }
+
+  void setupEnemies() {
+    enemies.clear();
+    for (int r=0; r<mapHeight; r++) {
+      for (int c=0; c<mapWidth; c++) {
+        if (terrain[r][c] == 2) {
+          enemies.add(new Walker(c*bw+hbw, r*bw+hbw));
         }
       }
     }

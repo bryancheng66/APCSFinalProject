@@ -5,22 +5,29 @@ public class Player {
   int speed;
   int radius;
   int health;
-  int timer;
+  int oldTimer;
   boolean attacking;
-  int[] swordPos;
+  int[] sword;
+  int strength;
+  int points;
+  boolean damaged;
 
   Player(int x, int y) {
     this.x=x;
     this.y=y;
     direction = 0;
-    speed = 2;
-    health = 30;
-    timer=0;
+    speed=2;
+    health=1000;
+    oldTimer=0;
     attacking = false;
+    damaged = false;
 
-    swordPos = new int[2];
-    swordPos[0] = 0;
-    swordPos[1] = 0;
+    sword = new int[2];
+    sword[0] = 0;
+    sword[1] = 0;
+
+    strength = 1;
+    points = 0;
   }
 
   void move() {
@@ -42,29 +49,10 @@ public class Player {
     }
 
     if (xMove!=0 || yMove!=0) {
-      int xF = x+xMove;
-      int yF = y+yMove;
-      
-      int pL = xF-hbw;
-      int pR = xF+hbw;
-      int pU = yF-hbw;
-      int pD = yF+hbw;
-      
-      for (int r=0; r<mapHeight; r++) {
-        for (int c=0; c<mapWidth; c++) {
-          if (currentMap.terrain[r][c] == 1) {
-            int tL = c*bw;
-            int tR = tL+bw;
-            int tU = r*bw;
-            int tD = tU+bw;
-            
-            if((pL <= tR && pR >= tL) && (pU <= tD && pD >= tU)){
-              xMove = 0;
-              yMove = 0;
-            }
-          }
-        }
-      }
+      if (tileCollision(x+xMove, y+yMove)) {
+        xMove=0;
+        yMove=0;
+      };
     }
 
     x+=xMove; 
@@ -78,7 +66,7 @@ public class Player {
       currentMap = maps[currentMap.y][currentMap.x+1]; 
       x=0;
     }
-    if (y>=height) {
+    if (y>height) {
       currentMap = maps[currentMap.y+1][currentMap.x];
       y=0;
     }
@@ -93,11 +81,11 @@ public class Player {
   }
 
   void attack() {    
-    if (timer==0) {
-      timer= (keys[4]?1:0) * 25;
-      attacking = keys[4];
-    } else {
-      timer--;
+    if (!attacking && keys[4]==true) {
+      oldTimer=timer;
+      attacking = true;
+    } else if (attacking && timer >= oldTimer+25) {
+      attacking = false;
     }
   }
 
@@ -107,12 +95,15 @@ public class Player {
       move();
     }
     attack();
+    display();
   }
 
   void display() {
-    fill(255, 0, 0);
-    text("Health: " + health + "," + direction, x, y-bw, 10);
-    fill(255, 255, 255);
+    if (damaged) {
+      fill(255, 255, 255);
+    } else {
+      fill(255, 255, 255);
+    }
     square(p.x, p.y, bw);
 
     if (attacking) {
@@ -120,14 +111,27 @@ public class Player {
       fill(0, 100, 255);
 
       if (direction==0) {
+        sword[0] = x;
+        sword[1] = y-bw;
         rect(x, y-bw, bw/2, bw);
       } else if (direction==1) {
+        sword[0] = x+bw;
+        sword[1] = y;
         rect(x+bw, y, bw, bw/2);
       } else if (direction==2) {
+        sword[0] = x;
+        sword[1] = y+bw;
         rect(x, y+bw, bw/2, bw);
       } else if (direction==3) {
+        sword[0] = x-bw;
+        sword[1] = y;
         rect(x-bw, y, bw, bw/2);
       }
     }
+    
+    //info text
+    fill(255, 0, 0);
+    textSize(25);
+    text("Health: " + health + " Points: " + points, width/2, bw);
   }
 }
